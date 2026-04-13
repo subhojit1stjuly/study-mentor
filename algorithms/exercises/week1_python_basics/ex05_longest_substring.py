@@ -29,6 +29,14 @@
 
 
 def length_of_longest_substring(s: str) -> int:
-    """Return the length of the longest substring without repeating characters."""
-    # YOUR CODE HERE
-    pass
+   left = 0
+   window_size = 0
+   seen = {} # frequency of the elements
+   for right in range(len(s)):
+      while s[right] in seen:
+         seen.pop(s[left])
+         left += 1
+      seen[s[right]] = 1  
+      window_size = max(window_size, (right - left + 1))
+    
+   return window_size
