@@ -31,15 +31,17 @@
 #   Can you compute the LEFT products for all positions in one pass?
 #   Then can you multiply in the RIGHT products in a second pass?
 #   What single variable do you need to carry through each pass?
+#  [1,1,2,6]
+#  [24,12,8,6] 
 
 
 def product_except_self(nums: list[int]) -> list[int]:
-    answer = [1] * len(nums)
     running = 1
+    answer = [1] * len(nums)
     for i in range(len(nums)):
         answer[i] = running
         running *= nums[i]
-    running =  1
+    running = 1
     for i in range(len(nums)-1,-1,-1):
         answer[i] *= running
         running *= nums[i]
