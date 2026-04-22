@@ -76,6 +76,7 @@ def first_bad_version(n: int, is_bad: callable) -> int:
 #
 # search_rotated([4,5,6,7,0,1,2], 0) → 4
 # search_rotated([6,7,1,2,3,4,5], 3) → 4
+# search_rotated([6,7,1,2,3,4,5], 1) → 2
 # search_rotated([1], 0)              → -1
 #
 # Hint: one half is ALWAYS sorted after any rotation.
@@ -85,7 +86,7 @@ def first_bad_version(n: int, is_bad: callable) -> int:
 #       else: right half is sorted
 
 def search_rotated(nums: list[int], target: int) -> int:
-    left,right = 0, len(nums)-1
+    left,right = 0, len(nums) - 1
     while left <= right:
         mid = left + (right - left) // 2
         if nums[mid] == target:
@@ -96,7 +97,7 @@ def search_rotated(nums: list[int], target: int) -> int:
             else:
                 left = mid + 1
         else:
-            if nums[right] >= target and nums[mid] < target:
+            if nums[mid] < target and nums[right] >= target:
                 left = mid + 1
             else:
                 right = mid - 1
@@ -119,7 +120,14 @@ def search_rotated(nums: list[int], target: int) -> int:
 #       else: min is in left half (including mid)
 
 def find_min(nums: list[int]) -> int:
-    pass
+    left,right = 0, len(nums) - 1
+    while left < right:
+        mid = left + (right - left) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]
 
 # Time:  O(?)
 # Space: O(?)
