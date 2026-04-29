@@ -172,9 +172,23 @@ def find_duplicate(nums: list[int]) -> int:
 #       Use binary search. Convert mid index to row/col:
 #       row = mid // cols,  col = mid % cols
 
-# Pattern:
+# Pattern: Binary Search (not optimal)
 def search_matrix(matrix: list[list[int]], target: int) -> bool:
-    pass
+    for row in matrix:
+        if target <= row[len(row)-1] and target >= row[0]:
+            left,right = 0, len(row) - 1
+            while left <= right:
+                mid = left + (right - left) // 2
+                if row[mid] == target:
+                    return True
+                elif row[mid] > target:
+                    right = mid - 1 
+                else:
+                    left = mid + 1
+        else:
+            continue
+    return False
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(m + logn)
+# Space: O(1)
+# optimal ? no , use flat binary tree.
