@@ -189,6 +189,24 @@ def search_matrix(matrix: list[list[int]], target: int) -> bool:
             continue
     return False
 
+def search_matrix_optimal(matrix: list[list[int]], target: int) -> bool:
+    # in a flat matrix number of items in the main list is actualy, number of rows in the matrix
+    # and number of items in any sublist is actualy, number of column in the matrix.
+    rows,cols = len(matrix),len(matrix[0]) 
+    # since we are having it as a flat array, so 0 is the initials index
+    # and if we multiply the row and col we get the length of the flat array
+    left,right = 0, (rows * cols) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        value = matrix[mid // cols][mid % cols]
+        if target == value: 
+            return True
+        elif target > value:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return False
+
 # Time:  O(m + logn)
 # Space: O(1)
 # optimal ? no , use flat binary tree.
