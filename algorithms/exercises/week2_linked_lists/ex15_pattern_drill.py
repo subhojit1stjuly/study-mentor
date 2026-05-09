@@ -18,12 +18,18 @@
 # contains_duplicate([1,2,3,4])     → False
 # contains_duplicate([1,1,1,3,3,4]) → True
 
-# Pattern:
+# Pattern: hasmap memory
 def contains_duplicate(nums: list[int]) -> bool:
-    pass
+    seen = {}
+    for i in nums:
+        if nums[i] in seen:
+            return True
+        else:
+            seen[nums[i]] = 1
+    return False
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(n)
 
 
 # ── Problem 2 ────────────────────────────────────────────────
@@ -34,12 +40,22 @@ def contains_duplicate(nums: list[int]) -> bool:
 # is_palindrome("race a car")                     → False
 # is_palindrome(" ")                              → True
 
-# Pattern:
+# Pattern: Two Pointers, Strings
 def is_palindrome(s: str) -> bool:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    left,right = 0, len(s) - 1 
+    while left != right:
+        while not s[left].isalnum():
+            left += 1
+        while not s[right].isalnum():
+            right -= 1
+        if s[left].lower() != s[right].lower():
+            return False
+        else:
+            left += 1
+            right -= 1
+    return True
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 3 ────────────────────────────────────────────────
