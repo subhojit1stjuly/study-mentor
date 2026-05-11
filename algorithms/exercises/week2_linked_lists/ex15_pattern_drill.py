@@ -20,13 +20,12 @@
 
 # Pattern: hasmap memory
 def contains_duplicate(nums: list[int]) -> bool:
-    seen = {}
-    for i in nums:
-        if nums[i] in seen:
-            return True
-        else:
-            seen[nums[i]] = 1
-    return False
+   seen = {}
+   for i in range(len(nums)):
+       if nums[i] in seen:
+           return True
+       seen[nums[i]] = i
+   return False
 
 # Time:  O(n)
 # Space: O(n)
@@ -42,7 +41,7 @@ def contains_duplicate(nums: list[int]) -> bool:
 
 # Pattern: Two Pointers, Strings
 def is_palindrome(s: str) -> bool:
-    left,right = 0, len(s) - 1 
+    left = 0, right = len(s) - 1
     while left != right:
         while not s[left].isalnum():
             left += 1
@@ -50,9 +49,8 @@ def is_palindrome(s: str) -> bool:
             right -= 1
         if s[left].lower() != s[right].lower():
             return False
-        else:
-            left += 1
-            right -= 1
+        left += 1
+        right -= 1
     return True
 # Time:  O(n)
 # Space: O(1)
@@ -67,12 +65,20 @@ def is_palindrome(s: str) -> bool:
 # move_zeroes([0,0,1])      → [1,0,0]
 # move_zeroes([1,2,3])      → [1,2,3]
 
-# Pattern:
-def move_zeroes(nums: list[int]) -> None:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+# Pattern: slow and fast pointer
+def move_zeroes(nums: list[int]) -> list:
+    left = 0
+    for right in range(1,len(nums)):
+        if nums[left] == 0 and nums[right] != 0:
+            nums[left] += nums[right]
+            nums[right] = nums[left] - nums[right]
+            nums[left] = nums[left] - nums[right]
+        # check if window is invalid-valid
+        if nums[left] != 0 :
+            left += 1
+    return nums
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 4 ────────────────────────────────────────────────
@@ -83,12 +89,17 @@ def move_zeroes(nums: list[int]) -> None:
 # remove_duplicates([1,1,2])          → 2  (array becomes [1,2,...])
 # remove_duplicates([0,0,1,1,1,2,2,3]) → 4  (array becomes [0,1,2,3,...])
 
-# Pattern:
+# Pattern: i dont know
 def remove_duplicates(nums: list[int]) -> int:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    index,uniques = 1,0
+    while index < (len(nums) - 1):
+        while nums[index] == (nums[index + 1]):
+            index += 1
+        uniques += 1
+        index += 1
+    return uniques
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 5 ────────────────────────────────────────────────
@@ -140,7 +151,9 @@ def subarray_sum(nums: list[int], target: int) -> int:
 
 # Pattern:
 def search_insert(nums: list[int], target: int) -> int:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    for i in range(len(nums)):
+        if nums[i]>=target:
+            return i
+    return 0
+# Time:  O(n)
+# Space: O(1)
