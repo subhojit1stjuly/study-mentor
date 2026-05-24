@@ -41,8 +41,8 @@ def contains_duplicate(nums: list[int]) -> bool:
 
 # Pattern: Two Pointers, Strings
 def is_palindrome(s: str) -> bool:
-    left = 0, right = len(s) - 1
-    while left != right:
+    left , right = 0 , len(s) - 1
+    while left < right:
         while not s[left].isalnum():
             left += 1
         while not s[right].isalnum():
@@ -68,13 +68,9 @@ def is_palindrome(s: str) -> bool:
 # Pattern: slow and fast pointer
 def move_zeroes(nums: list[int]) -> list:
     left = 0
-    for right in range(1,len(nums)):
-        if nums[left] == 0 and nums[right] != 0:
-            nums[left] += nums[right]
-            nums[right] = nums[left] - nums[right]
-            nums[left] = nums[left] - nums[right]
-        # check if window is invalid-valid
-        if nums[left] != 0 :
+    for right in range(len(nums)):
+        if nums[right] != 0:
+            nums[left],nums[right] = nums[right], nums[left]
             left += 1
     return nums
 # Time:  O(n)
@@ -89,15 +85,13 @@ def move_zeroes(nums: list[int]) -> list:
 # remove_duplicates([1,1,2])          → 2  (array becomes [1,2,...])
 # remove_duplicates([0,0,1,1,1,2,2,3]) → 4  (array becomes [0,1,2,3,...])
 
-# Pattern: i dont know
+# Pattern: two pointer
 def remove_duplicates(nums: list[int]) -> int:
-    index,uniques = 1,0
-    while index < (len(nums) - 1):
-        while nums[index] == (nums[index + 1]):
-            index += 1
-        uniques += 1
-        index += 1
-    return uniques
+    left  = 1
+    for right in range(1,len(nums)):
+        if nums[right] != nums[right - 1]:
+            left += 1
+    return left
 # Time:  O(n)
 # Space: O(1)
 
@@ -111,12 +105,19 @@ def remove_duplicates(nums: list[int]) -> int:
 # length_of_longest("pwwkew")  → 3  ("wke")
 # length_of_longest("")        → 0
 
-# Pattern:
+# Pattern:sliding window
 def length_of_longest(s: str) -> int:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    left , window_size = 0,0
+    seen = {}
+    for right in range(len(s)):
+        while s[right] in seen:
+            seen.pop(s[left])
+            left += 1
+        seen[s[right]] = 1
+        window_size = max(window_size, right - left + 1)
+    return window_size
+# Time:  O(n)
+# Space: O(n)
 
 
 # ── Problem 6 ────────────────────────────────────────────────
@@ -133,7 +134,15 @@ def length_of_longest(s: str) -> int:
 
 # Pattern:
 def subarray_sum(nums: list[int], target: int) -> int:
-    pass
+    seen = {0:1}
+    prefix = 0
+    count = 0
+    for i in range(len(nums)):
+        prefix += nums[i]
+        if (prefix - target) in seen:
+            count += seen[prefix-target]
+        seen[prefix] = seen.get(prefix,0) + 1
+    return count
 
 # Time:  O(?)
 # Space: O(?)
@@ -151,9 +160,15 @@ def subarray_sum(nums: list[int], target: int) -> int:
 
 # Pattern:
 def search_insert(nums: list[int], target: int) -> int:
-    for i in range(len(nums)):
-        if nums[i]>=target:
-            return i
-    return 0
-# Time:  O(n)
+    left,right = 0, len(nums) - 1
+    while left<=right:
+        mid = left + (right - left) // 2 
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] > target:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return left
+# Time:  O(log n )
 # Space: O(1)
