@@ -132,7 +132,7 @@ def length_of_longest(s: str) -> int:
 #       count[prefix] = how many times this prefix sum was seen
 #       if (current_prefix - target) was seen before → found a subarray
 
-# Pattern:
+# Pattern: Prefix Sum + Hash Map
 def subarray_sum(nums: list[int], target: int) -> int:
     seen = {0:1}
     prefix = 0
@@ -144,8 +144,8 @@ def subarray_sum(nums: list[int], target: int) -> int:
         seen[prefix] = seen.get(prefix,0) + 1
     return count
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(n)
 
 
 # ── Problem 7 ────────────────────────────────────────────────
