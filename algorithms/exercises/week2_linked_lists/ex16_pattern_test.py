@@ -73,16 +73,17 @@ def sorted_squares(nums: list[int]) -> list[int]:
 # min_subarray_len(4, [1,4,4])       → 1  (subarray [4])
 # min_subarray_len(11, [1,1,1,1,1])  → 0
 
-# Pattern: prefix Sum + HashMap
+# Pattern: sliding window
 def min_subarray_len(target: int, nums: list[int]) -> int:
-    prefix,count = 0,0
-    seen = {0:1}
-    for i in range(len(nums)):
-        prefix += nums[i]
-        if (prefix - target) in seen:
-            count += seen[prefix - target]
-        seen[prefix] = seen.get(prefix,0)+1
-    return count
+    window_sum,left = 0,0
+    min_len = float('inf')
+    for right in range(len(nums)):
+        window_sum += nums[right]
+        while window_sum >= target:
+            min_len = min(min_len,right - left + 1)
+            window_sum -= nums[left]
+            left += 1
+    return 0 if min_len == float('inf') else min_len
 
 # Time:  O(?)
 # Space: O(?)
