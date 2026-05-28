@@ -48,17 +48,19 @@ def is_anagram(s: str, t: str) -> bool:
 # Pattern: Two pointer
 def sorted_squares(nums: list[int]) -> list[int]:
     left, right = 0, len(nums)-1
-    while left < right:
-        sql = nums[left] * nums[left]
-        sqr = nums[right] * nums[right]
+    result = [0] * len(nums)
+    pos = len(nums) - 1
+    while left <= right:
+        sql = nums[left] ** 2
+        sqr = nums[right] ** 2
         if sql > sqr:
-            nums[left],nums[right] = nums[right],sql
+            result[pos] = sql
+            left += 1
         else:
-            nums[right] = sqr
-        right -=1
-    if left == 0:
-        nums[left] = nums[left] * nums[left]
-    return nums
+            result[pos] = sqr
+            right -= 1
+        pos -=1
+    return result
 
 # Time:  O(n)
 # Space: O(1)
@@ -101,10 +103,20 @@ def min_subarray_len(target: int, nums: list[int]) -> int:
 
 # Pattern:
 def pivot_index(nums: list[int]) -> int:
-    pass
+    total = 0
+    left_sum,right_sum = 0,0
+    for i in range(len(nums)):
+        total += nums[i]
+    for i in range(len(nums)):
+        right_sum = total - left_sum - nums[i]
+        if right_sum == left_sum:
+            return i
+        else:
+            left_sum += nums[i]
+    return -1
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 5 ────────────────────────────────────────────────
@@ -118,12 +130,20 @@ def pivot_index(nums: list[int]) -> int:
 # Hint: Think Kadane's — but products behave differently than sums.
 #       A negative * negative = positive. Track both max and min.
 
-# Pattern:
+# Pattern: Kadane's
 def max_product(nums: list[int]) -> int:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    if not nums:
+        return 0
+    curr_max = best = nums[0]
+    curr_min = nums[0]
+    for i in range(1,len(nums)):
+        candidates = (nums[i],curr_max * nums[i], curr_min * nums[i])
+        curr_max = max(candidates)
+        curr_min = min(candidates)
+        best = max(best,candidates)
+    return best
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 6 ────────────────────────────────────────────────
