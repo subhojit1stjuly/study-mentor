@@ -132,18 +132,27 @@ def pivot_index(nums: list[int]) -> int:
 
 # Pattern: Kadane's
 def max_product(nums: list[int]) -> int:
-    if not nums:
-        return 0
-    curr_max = best = nums[0]
-    curr_min = nums[0]
-    for i in range(1,len(nums)):
-        candidates = (nums[i],curr_max * nums[i], curr_min * nums[i])
-        curr_max = max(candidates)
-        curr_min = min(candidates)
-        best = max(best,candidates)
-    return best
+    result = max_product = nums[0]
+    min_product = nums[0]
+    for i in range(nums[1:]):
+        candidates = (nums[i],max_product*nums[i],min_product*nums[i])
+        max_product = max(candidates)
+        min_product = min(candidates)
+        result = max(result,candidates)
+    return result
 # Time:  O(n)
 # Space: O(1)
+# reasoning behind the logic : - 
+# there are three candidates -
+# why nums[i] is a candidate ? since it is a contiguous subarray, 
+# means if we would have made th result as a candidate, then we would have carring the maxvalue which is wrong 
+# because we are not calculating the max posetive product.
+# why max_product * nums[i] is a candidate ? - becasue it stores the max value in the contigues sub arrays
+# why min_product * nums[i] is a candidate ? becasue it stores the min value in the contigues sub array, since two negetive value 
+# can be multiplied and gives us the greater number. 
+# now why result is calculated with max between result and candidtes?
+# since a single item in the array can be max , result it self can be max.
+# so we used the max_product and min_product as a memory because two negetive numbers can give us a higher posetive number.
 
 
 # ── Problem 6 ────────────────────────────────────────────────
@@ -165,12 +174,42 @@ def max_product(nums: list[int]) -> int:
 #
 # baseball(["5","-2","4","C","D","9","+","+"]) → 27
 
-# Pattern:
-def baseball(ops: list[str]) -> int:
-    pass
 
-# Time:  O(?)
-# Space: O(?)
+# reasoning behind the logic : - 
+# Question to ask ? 
+# * what if the array starts with + or D, or C
+# * what if the + appears as the first / second Element in the array ?
+# Constraints -
+# * every number is a integer, not a float 
+# * there can be negetive numbers as a score,
+# * there can never be any other extra charector in the list other than these C, D, +
+# analogy - 
+# since the items in the list is charectors, we need to make sure to convert them to integer or atleast check in every way.
+# so my first naive strategie will be to besically use a extra list for keeping the track
+# afterwards I will think about more storage optimised way to solve.
+
+
+# Pattern: stack
+def baseball(ops: list[str]) -> int:
+    final_scores = []
+    for i in range(len(ops)):
+        if ops[i] == '+':
+            if final_scores and len(final_scores)>=2:
+                final_scores.append(final_scores[-1] + final_scores[-2])
+        elif ops[i] == 'C':
+            if final_scores:
+                final_scores.pop()
+        elif ops[i] == 'D':
+            final_scores.append(final_scores[-1] * 2)
+        else:
+            final_scores.append(int(ops[i]))
+    result = 0
+    for i in range(len(final_scores)):
+        result += final_scores[i]
+    return result
+
+# Time:  O(n+n)
+# Space: O(n)
 
 
 # ── Problem 7 ────────────────────────────────────────────────
@@ -184,9 +223,38 @@ def baseball(ops: list[str]) -> int:
 #
 # Hint: Think about what "loops forever" means structurally.
 
-# Pattern:
+# reasoning behind the logic : - 
+# the number can be only posetive right,and there are no flaoting points ?
+# so there is a repetative function that calculates 
+# the sum of squares of its digits, which can be converted into 
+# a recursive method which eventually return true if the number is 1, 
+# but since the calculation can be looped forever, so we need to 
+# make sure to break it if there are any loops. so in order to
+# find if there are any loops, we can just check that 
+# the sum of squares of its digits of current number == 
+# the sum of squares of its digits of actual number. but here the problem is 
+# that we can not remember the original number when the loop become infinite. so
+# first will try to solve this using simple loop. correct me if i am wrong 
+# or if there are better approaches.
+# final undestanding is that, i can create helper methods to solve a problem.
+
+# Pattern: Floyd's cycle detection
 def is_happy(n: int) -> bool:
-    pass
+    slow, fast = n,n
+    while fast != 1:
+        fast = digits_square(fast)
+        fast = digits_square(fast)
+        slow= digits_square(slow)
+        if slow == fast:
+            break
+
+    return fast == 1
+def digits_square(num:int)->int:
+    total = 0
+    while num != 0:
+            total += (num % 10) ** 2
+            num = num // 10
+    return total 
 
 # Time:  O(?)
 # Space: O(?)
