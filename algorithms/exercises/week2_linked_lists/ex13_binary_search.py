@@ -103,8 +103,8 @@ def search_rotated(nums: list[int], target: int) -> int:
                 right = mid - 1
     return -1
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(log n)
+# Space: O(1)
 
 
 # ── Problem 4 — Find Minimum in Rotated Sorted Array ─────────
@@ -129,5 +129,5 @@ def find_min(nums: list[int]) -> int:
             right = mid
     return nums[left]
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(log n)
+# Space: O(1)

@@ -257,7 +257,7 @@ def digits_square(num:int)->int:
     return total 
 
 # Time:  O(?)
-# Space: O(?)
+# Space: O(1)
 
 
 # ── Problem 8 ────────────────────────────────────────────────
@@ -268,12 +268,28 @@ def digits_square(num:int)->int:
 # find_peak([1,2,3,1])     → 2
 # find_peak([1,2,1,3,5,6,4]) → 1 or 5  (either valid)
 
+# reasoning: 
+# what are the differnt types arrays can be there ?
+# can it be [1,6,4,5,2] ? yes
+# so we are not finding the max value in the array,
+# we are finding any peak that can be exited.
+# so keeping that in mind, we can have multiple peaks in the array 
+# like in the second example we have two peak, either of them is correct.
+
 # Pattern:
 def find_peak(nums: list[int]) -> int:
-    pass
-
-# Time:  O(?)
-# Space: O(?)
+    left,right = 0, len(nums) -1
+    while left < right:
+        mid = left + (right - left) // 2 
+        if right == mid:
+            break
+        elif nums[mid] < nums[mid+1]:
+            left = mid + 1   # ← peak is in right half
+        else:
+            right = mid      # ← peak is in left half (mid itself could be peak)
+    return right
+# Time:  O(log n)
+# Space: O(1)
 
 
 # ── Problem 9 ────────────────────────────────────────────────
