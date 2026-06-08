@@ -29,14 +29,12 @@
 
 
 def length_of_longest_substring(s: str) -> int:
-   left = 0
-   window_size = 0
-   seen = {} # frequency of the elements
+   left,max_len = 0,0
+   window = {}
    for right in range(len(s)):
-      while s[right] in seen:
-         seen.pop(s[left])
+      while s[right] in window:
+         window.pop(s[left])
          left += 1
-      seen[s[right]] = 1  
-      window_size = max(window_size, (right - left + 1))
-    
-   return window_size
+      window[s[right]] = 1
+      max_len = max(max_len, right - left + 1) 
+   return max_len

@@ -75,20 +75,24 @@ def reverse_vowels(s: str) -> str:
 # longest_k_distinct("aa", k=1)       → 2  ("aa")
 # longest_k_distinct("abcabc", k=3)   → 6  ("abcabc")
 
-# Pattern: sliding window + HasMap
+# Pattern: sliding window (variable length)
 def longest_k_distinct(s: str, k: int) -> int:
-    left = 0
-    max_len = 0
-    seen = {}
-    for right, char in enumerate(s):
-        seen[char] = seen.get(char, 0) + 1
-        while len(seen) > k:
-            seen[s[left]] -= 1
-            if seen[s[left]] == 0:
-                del seen[s[left]]
+    left,max_len = 0,0
+    window = {}
+    for right in range(len(s)):
+        # expand the window
+        window[s[right]] = window.get(s[right],0) + 1
+        # validate if teh window is valid or not
+        while len(window) > k and left < right:
+            if window[s[left]] > 1:
+                window[s[left]] -= 1
+            else:
+                window.pop(s[left])
             left += 1
-        max_len = max(max_len, right - left + 1)
+        max_len = max(max_len,right - left + 1)
     return max_len
+
+
           
 # Time:  O(n)
 # Space: O(k)
