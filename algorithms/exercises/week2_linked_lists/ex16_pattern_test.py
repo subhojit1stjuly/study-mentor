@@ -134,7 +134,7 @@ def pivot_index(nums: list[int]) -> int:
 def max_product(nums: list[int]) -> int:
     result = max_product = nums[0]
     min_product = nums[0]
-    for i in range(nums[1:]):
+    for i in range(len(1,len(nums))):
         candidates = (nums[i],max_product*nums[i],min_product*nums[i])
         max_product = max(candidates)
         min_product = min(candidates)
@@ -276,7 +276,7 @@ def digits_square(num:int)->int:
 # so keeping that in mind, we can have multiple peaks in the array 
 # like in the second example we have two peak, either of them is correct.
 
-# Pattern:
+# Pattern: binary search
 def find_peak(nums: list[int]) -> int:
     left,right = 0, len(nums) -1
     while left < right:
@@ -305,16 +305,25 @@ def find_peak(nums: list[int]) -> int:
 # rc.ping(3001) → 3   (requests: [1, 100, 3001])
 # rc.ping(3002) → 3   (requests: [100, 3001, 3002], 1 is out of range)
 
-# Pattern:
+# Pattern: deque
 from collections import deque
 
 class RecentCounter:
     def __init__(self):
-        pass
+        self.currentMax = 3000
+        self.queue = deque()
 
     def ping(self, t: int) -> int:
-        pass
-
+        if self.currentMax < t:
+            self.currentMax = t
+        currentMin = self.currentMax - 3000
+        self.queue.append(t)
+        while True:
+            if self.queue[0] < currentMin:
+                self.queue.popleft()
+            else:
+                break
+        return len(self.queue)
 
 # ── Problem 10 ───────────────────────────────────────────────
 # Given a binary array (only 0s and 1s), find the maximum length
@@ -327,9 +336,16 @@ class RecentCounter:
 # Hint: Replace each 0 with -1. Then the problem becomes:
 #       "find longest subarray with sum = 0"
 
-# Pattern:
+# Pattern: prefix sum + hash Map
 def max_equal(nums: list[int]) -> int:
-    pass
-
-# Time:  O(?)
+    prefix, max_len = 0
+    seen = {0:-1}
+    for i,num in enumerate(nums):
+        prefix += 1 if num == 1 else -1
+        if prefix in seen:
+            max_len = max(max_len, i-seen[prefix])
+        else:
+            seen[prefix] = 1
+    return max_len 
+# Time:  O(n)
 # Space: O(?)
