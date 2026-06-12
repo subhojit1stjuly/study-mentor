@@ -10,20 +10,36 @@
 
 ```
 D:\Projects\CS_AI_Study\
-├── .teach/                              # ✅ Learning system (COPIED)
-│   ├── agents/                          # Agent definitions
-│   ├── templates/                       # Learning templates
-│   ├── scripts/powershell/              # Automation scripts
-│   ├── domains/                         # 5 domain guides
-│   │   ├── competitive-coding/
-│   │   ├── machine-learning/
-│   │   ├── ai-engineering/
-│   │   ├── web-development/
-│   │   └── system-design/
-│   └── memory/                          # Your philosophy & active skill
+├── teach_me/                            # ✅ Learning system (GIT SUBMODULE)
+│   ├── .teach/                          # From: https://github.com/subhojit1stjuly/teach_me
+│   │   ├── agents/                      # Agent definitions
+│   │   ├── templates/                   # Learning templates
+│   │   ├── scripts/powershell/          # Automation scripts
+│   │   ├── domains/                     # 5 domain guides
+│   │   │   ├── competitive-coding/
+│   │   │   ├── machine-learning/
+│   │   │   ├── ai-engineering/
+│   │   │   ├── web-development/
+│   │   │   └── system-design/
+│   │   └── memory/                      # Your philosophy & active skill
+│   └── skills/                          # Your 14 skills
+│       ├── 001-dynamic-programming/
+│       ├── 002-graph-algorithms/
+│       ├── 003-arrays-and-strings/
+│       ├── 004-sliding-window-two-pointers/
+│       ├── 005-backtracking-and-recursion/
+│       ├── 006-greedy-algorithms/
+│       ├── 007-binary-search-and-sorting/
+│       ├── 008-bit-manipulation/
+│       ├── 009-math-and-number-theory/
+│       ├── 010-stack-and-queue/
+│       ├── 011-heap-and-priority-queue/
+│       ├── 012-linked-lists/
+│       ├── 013-hashing-and-hash-tables/
+│       └── 014-advanced-data-structures/
 │
-├── .github/agents/                      # ✅ Copilot CLI agents (REGISTERED)
-│   ├── teachme.assess.agent.md
+├── .github/agents/                      # ✅ Copilot CLI agents (INJECTED)
+│   ├── teachme.assess.agent.md          # Copied from teach_me
 │   ├── teachme.define.agent.md
 │   ├── teachme.learn.agent.md
 │   ├── teachme.modules.agent.md
@@ -31,21 +47,7 @@ D:\Projects\CS_AI_Study\
 │   ├── teachme.roadmap.agent.md
 │   └── teachme.validate.agent.md
 │
-├── skills/                              # ✅ Your 14 skills (COPIED)
-│   ├── 001-dynamic-programming/
-│   ├── 002-graph-algorithms/
-│   ├── 003-arrays-and-strings/
-│   ├── 004-sliding-window-two-pointers/
-│   ├── 005-backtracking-and-recursion/
-│   ├── 006-greedy-algorithms/
-│   ├── 007-binary-search-and-sorting/
-│   ├── 008-bit-manipulation/
-│   ├── 009-math-and-number-theory/
-│   ├── 010-stack-and-queue/
-│   ├── 011-heap-and-priority-queue/
-│   ├── 012-linked-lists/
-│   ├── 013-hashing-and-hash-tables/
-│   └── 014-advanced-data-structures/
+├── .gitmodules                          # ✅ Submodule configuration
 │
 ├── algorithms/                          # Your practice code
 ├── ai/                                  # AI projects
@@ -124,7 +126,7 @@ The agent will:
 - Identify gaps and strengths
 - Determine your starting point (Beginner/Intermediate/Advanced)
 
-**Output**: `skills/003-arrays-and-strings/assessment-diagnostic.md`
+**Output**: `teach_me/skills/003-arrays-and-strings/assessment-diagnostic.md`
 
 ---
 
@@ -139,7 +141,7 @@ The agent will create:
 - 3 phases: Foundation → Development → Mastery
 - Timeline based on 31 hrs/week
 
-**Output**: `skills/003-arrays-and-strings/roadmap.md`
+**Output**: `teach_me/skills/003-arrays-and-strings/roadmap.md`
 
 ---
 
@@ -154,7 +156,7 @@ The agent will break your roadmap into:
 - Progressive exercises with hints
 - Checkpoint assessments
 
-**Output**: `skills/003-arrays-and-strings/modules.md`
+**Output**: `teach_me/skills/003-arrays-and-strings/modules.md`
 
 ---
 

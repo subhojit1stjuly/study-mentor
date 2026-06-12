@@ -3,7 +3,13 @@
 This repository uses the **Teach Me** structured learning system optimized for working professionals.
 
 ## 📍 Teach Me Location
-`D:\Projects\ShowCase\agentAi\teach_me`
+**Git Submodule**: `D:\Projects\CS_AI_Study\teach_me\` (from https://github.com/subhojit1stjuly/teach_me)
+
+> 💡 The teach_me system is now a git submodule! Updates can be pulled with:
+> ```bash
+> cd teach_me
+> git pull origin master
+> ```
 
 ## ⏰ Your Study Schedule (Working Professional)
 
@@ -23,7 +29,7 @@ This repository uses the **Teach Me** structured learning system optimized for w
 **Monday-Friday 7:00-8:00 AM** - Before work
 
 ```powershell
-cd D:\Projects\ShowCase\agentAi\teach_me
+cd D:\Projects\CS_AI_Study
 
 # Quick review (5 min)
 # - Check yesterday's progress
