@@ -110,12 +110,19 @@ def longest_k_distinct(s: str, k: int) -> int:
 # product_except_self([2,3,4,5])  → [60,40,30,24]
 # product_except_self([-1,1,0,-3,3]) → [0,0,9,0,0]
 
-# Pattern:
+# Pattern: prefix and suffix
 def product_except_self(nums: list[int]) -> list[int]:
-    pass
+    result = [1] * len(nums)
+    for i in range(1,len(nums)):
+        result[i] = result[i-1] * nums[i-1]
+    right = 1
+    for i in range(len(nums)-1,-1,-1):
+        result[i] *= right
+        right *= nums[i]
+    return result
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(1) without the result array
 
 
 # ── Problem 5 ────────────────────────────────────────────────
@@ -128,9 +135,18 @@ def product_except_self(nums: list[int]) -> list[int]:
 # longest_increasing([2,2,2,2])    → 1
 # longest_increasing([5,4,3,2,1])  → 1
 
-# Pattern:
+# Pattern: sliding window with variable size
 def longest_increasing(nums: list[int]) -> int:
-    pass
+    left = 0
+    max_len = 0
+    best = nums[0]
+    for right in range(len(nums)):
+        # if the window is in-valid
+        if best+1 > nums[right]:
+            left = right
+        best = nums[right]
+        max_len = max(max_len, right - left + 1)
+    return max_len
 
 # Time:  O(?)
 # Space: O(?)
@@ -148,13 +164,23 @@ def longest_increasing(nums: list[int]) -> int:
 # is_valid("(]")       → False
 # is_valid("([)]")     → False
 # is_valid("{[]}")     → True
+# is_valid("{[{[()]}]}")     → True
 
-# Pattern:
+# Pattern: stack 
 def is_valid(s: str) -> bool:
-    pass
+    valide_parenthesis = { ')':'(', '}':'{', ']':'['}
+    stack = []
+    for i,char in enumerate(s):
+        if not stack and char in valide_parenthesis:
+            return False
+        if char in valide_parenthesis and stack[-1] == valide_parenthesis.get(char):
+            stack.pop()
+        else:
+            stack.append(char)
+    return not stack
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 7 ────────────────────────────────────────────────
