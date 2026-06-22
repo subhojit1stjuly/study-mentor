@@ -191,7 +191,7 @@ def is_valid(s: str) -> bool:
 # by continuously following the `next` pointer.
 #
 # Return True if cycle exists, False otherwise.
-
+# pattern - floyed cycle detection
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -199,10 +199,16 @@ class ListNode:
 
 # Pattern:
 def has_cycle(head: ListNode) -> bool:
-    pass
+    slow,fast = head,head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(logn)
+# Space: O(1)
 
 
 # ── Problem 8 ────────────────────────────────────────────────
@@ -216,12 +222,18 @@ def has_cycle(head: ListNode) -> bool:
 # max_profit([7,6,4,3,1])    → 0  (no profit possible)
 # max_profit([2,4,1])        → 2  (buy at 2, sell at 4)
 
-# Pattern:
+# Pattern: dynamic programming problem
 def max_profit(prices: list[int]) -> int:
-    pass
+    profit = 0
+    left = 0
+    for right in range(1,len(prices)):
+        profit = max(profit,prices[right] - prices[left])
+        while prices[left] > prices[right]:
+            left += 1
+    return profit
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(n)
+# Space: O(1)
 
 
 # ── Problem 9 ────────────────────────────────────────────────
@@ -235,12 +247,33 @@ def max_profit(prices: list[int]) -> int:
 # find_min_index([4,5,6,7,0,1,2])  → 4
 # find_min_index([1,2,3,4,5])      → 0  (not rotated)
 
-# Pattern:
+# Pattern: binary search
+# here we are comparing with right because if the array is [1,2,3,4,5,6]
+# then while compring with left will discard the smallest element.
+# soif we are told to get the heighest element then we should compare with right.
 def find_min_index(nums: list[int]) -> int:
-    pass
+    left = 0
+    right = len(nums) - 1
+    while left < right:
+        mid = left + (right -left) // 2
+        if nums[mid] > nums[right]:
+           left = mid + 1
+        else:
+            right = mid
+    return left
+def find_max_index(nums: list[int]) -> int:
+    left = 0
+    right = len(nums) - 1
+    while left< right:
+        mid = left + (right - left) // 2
+        if nums[mid] >= nums[left]:
+            left = mid 
+        else:
+            right = mid - 1
+    return left
 
-# Time:  O(?)
-# Space: O(?)
+# Time:  O(log n)
+# Space: O(1)
 
 
 # ── Problem 10 ───────────────────────────────────────────────

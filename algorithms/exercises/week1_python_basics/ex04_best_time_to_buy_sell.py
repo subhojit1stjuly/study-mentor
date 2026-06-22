@@ -46,6 +46,6 @@ def max_profit(prices: list[int]) -> int:
       return profit
    for i in range(1,len(prices)):
       profit = max(profit,(prices[i]-prices[left]))
-      if prices[i] < prices[left]:
+      while prices[i] < prices[left]:
          left = i
    return profit 
