@@ -286,9 +286,23 @@ def find_max_index(nums: list[int]) -> int:
 # count_zero_sum([1,-1,0])     → 3  ([-1,1], [0], [1,-1,0])
 # count_zero_sum([1,2,3])      → 0
 
-# Pattern:
+# prefix_sum - left_sum = k
+# prefix_sum - k = left_sum
+# Pattern: prefix sum + HashMap
 def count_zero_sum(nums: list[int]) -> int:
-    pass
+    seen = {0:1}
+    count = 0
+    prefix_sum = 0
+    target = 0
+    for i,num in enumerate(nums):
+        prefix_sum += num
+        look_for = prefix_sum - target
+        if look_for in seen:
+            count += seen.get(look_for,0)
+        seen[prefix_sum] = seen.get(prefix_sum,0) + 1
+    return count
+        
 
-# Time:  O(?)
-# Space: O(?)
+
+# Time:  O(n)
+# Space: O(1)
